@@ -2,11 +2,13 @@ import { NavLink, useLocation } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const SideNav = () => {
   const location = useLocation();
     const { isPending, error, data } = useQuery({
         queryKey: ['sidenavpath'],
-        queryFn: () => axios.get(`https://localhost:7018/api/side-nav-paths`)
+        queryFn: () => axios.get(`${BASE_URL}/api/side-nav-paths`)
     })
 
   return (
