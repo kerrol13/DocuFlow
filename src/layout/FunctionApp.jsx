@@ -10,7 +10,7 @@ const FunctionApp = ({ queryData, processData }) => {
       <section className="mb-32">
         {/* Header */}
         <header className="mb-12">
-          <h2 className="text-3xl font-normal text-neutral-900 tracking-tight">
+          <h2 className="text-3xl font-normal text-neutral-900 ">
             {data.functionName || "Unnamed Function"}
           </h2>
           <p className="text-neutral-500 font-light text-sm mt-1">

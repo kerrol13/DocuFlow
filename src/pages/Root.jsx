@@ -24,10 +24,10 @@ const Root = () => {
     const devKeynotesData = data?.data.keyNotes.filter(x => x.documentType == DEVELOPERS)
 
     return (
-        <div className="h-screen w-screen bg-white flex">
-            <ScrollToTop pathname={id} />
+        <div className="h-screen w-screen bg-[#eceae9] flex uppercase">
+            <ScrollToTop id={id} />
             <SideNav />
-            <div className="w-full overflow-y-scroll overflow-x-hidden outlet-container">
+            <div className="w-full overflow-y-scroll overflow-x-hidden flex-1 outlet-container">
                 {data?.data &&
                     <>
                         <Header title={data?.data.name} guidePath={`/documentation/guide/${id}`} devPath={`/documentation/dev/${id}`} />
@@ -36,7 +36,6 @@ const Root = () => {
                     </>
                 }
             </div>
-
         </div>
     )
 }

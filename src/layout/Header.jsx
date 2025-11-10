@@ -2,14 +2,14 @@ import { NavLink } from "react-router"
 
 const Header = ({ title, guidePath, devPath }) => {
     return (
-        <header className="border-b border-neutral-100 text-neutral-900 ">
+        <header className="border-b border-[#d9d9d9]  text-neutral-900 ">
             <div className="max-w-3xl mx-auto px-6 py-16">
-                <h1 className="text-4xl font-light tracking-tight mb-2">
+                <h1 className="text-8xl font-Druk-Bold mb-2 ">
                     {title}
                 </h1>
-                <p className="text-neutral-500 font-light">Documentation</p>
+                <p className="text-2xl font-Druk-Medium tracking-wide ">Documentation</p>
 
-                <div className="flex gap-8 mt-12">
+                <div className="flex gap-8 mt-12 font-monument-grotesk-regular">
                     <NavLink
                         to={guidePath}
                         className={({ isActive }) =>

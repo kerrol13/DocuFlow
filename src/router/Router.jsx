@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import Root from "../pages/Root";
 import Steps from "../pages/guides/Steps";
 import Developers from "../pages/guides/Developers";
+import AddNewProcess from "../pages/guides/AddNewProcess";
 
 const Router = createBrowserRouter([
   {
@@ -15,7 +16,11 @@ const Router = createBrowserRouter([
       {
         path: "/documentation/dev/:id", element: <Developers />,
       },
+
     ],
+  },
+  {
+    path: "/documentation/generate-process", element: <AddNewProcess />,
   },
 
 ]);

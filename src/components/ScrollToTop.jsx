@@ -1,10 +1,12 @@
 // ScrollToTop.jsx
 import { useEffect } from "react";
 
-const ScrollToTop = ({pathname}) => {
+const ScrollToTop = ({id}) => {
 
   useEffect(() => {
     // Wait for DOM paint so smooth scroll actually animates
+    console.log(id)
+
     const container = document.querySelector(".outlet-container");
     if (container) {
       requestAnimationFrame(() => {
@@ -14,7 +16,7 @@ const ScrollToTop = ({pathname}) => {
         });
       });
     }
-  }, [pathname]);
+  }, [id]);
 
   return null;
 };

@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'SkribblughRegular';
+  src: url("../src/assets/fonts/SkribblughRegular-XGW02.otf") format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Druk-Bold';
+  src: url("../src/assets/fonts/Druk-Bold-Trial.otf") format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Druk-Medium';
+  src: url("../src/assets/fonts/Druk-Medium-Trial.otf") format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'monument-grotesk-regular';
+  src: url("../src/assets/fonts/monument-grotesk-regular.ttf") format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+@theme {
+  --font-SkribblughRegular: 'SkribblughRegular', sans-serif;
+  --font-Druk-Bold: 'Druk-Bold', sans-serif;
+  --font-Druk-Medium: 'Druk-Medium', sans-serif;
+  --font-monument-grotesk-regular: 'monument-grotesk-regular', sans-serif;
+}
