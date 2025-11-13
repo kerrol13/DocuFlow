@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter }) => {
+const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes, setStepsSetter, setKeyNotesSetter }) => {
     const [steps, setSteps] = useState(initialSteps);
     const [keyNotes, setKeyNotes] = useState(initialKeyNotes);
 
@@ -19,32 +19,37 @@ const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter })
         } else {
             target[lastKey] = e.target.innerText;
         }
-        setStepsSetter && setStepsSetter(newSteps)
+
         setSteps(newSteps);
+        setStepsSetter && setStepsSetter(newSteps);
     };
 
     const updateKeyNoteText = (idx, e) => {
         const newKeyNotes = [...keyNotes];
         newKeyNotes[idx].note = e.target.innerText;
         setKeyNotes(newKeyNotes);
+        setKeyNotesSetter && setKeyNotesSetter(newKeyNotes); // sync with parent
     };
 
     useEffect(() => {
-        setStepsSetter && setStepsSetter(initialSteps)
-        setSteps(initialSteps)
-    }, [initialSteps])
+        setSteps(initialSteps);
+        setStepsSetter && setStepsSetter(initialSteps);
+        setKeyNotes(initialKeyNotes);
+        setKeyNotesSetter && setKeyNotesSetter(initialKeyNotes);
+    }, [initialSteps, initialKeyNotes, setStepsSetter, setKeyNotesSetter]);
 
     return (
         <main className="max-w-3xl mx-auto px-6 pt-10">
             <div className="space-y-24">
-                {steps.map((step, stepIndex) => (
+                {steps?.map((step, stepIndex) => (
                     <section key={step.number} className="relative">
+                        {/* Step Header */}
                         <div className="flex items-baseline gap-8 mb-8">
                             <span
                                 contentEditable
                                 suppressContentEditableWarning
                                 onBlur={(e) => updateText(stepIndex, 'number', e)}
-                                className="text-8xl font-Druk-Bold  leading-none outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
+                                className="text-8xl font-Druk-Bold leading-none outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
                             >
                                 {step.number}
                             </span>
@@ -52,7 +57,7 @@ const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter })
                                 contentEditable
                                 suppressContentEditableWarning
                                 onBlur={(e) => updateText(stepIndex, 'title', e)}
-                                className="font-Druk-Medium  text-5xl   outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
+                                className="font-Druk-Medium text-5xl outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
                             >
                                 {step.title}
                             </h2>
@@ -65,14 +70,14 @@ const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter })
                                     contentEditable
                                     suppressContentEditableWarning
                                     onBlur={(e) => updateText(stepIndex, `content.${idx}`, e)}
-                                    className=" font-light outline-none focus:ring-2 focus:ring-blue-200 rounded "
+                                    className="font-light outline-none focus:ring-2 focus:ring-blue-200 rounded"
                                 >
                                     {content.text}
                                 </p>
                             ))}
 
                             {step.details && (
-                                <div className="mt-8 pt-8 border-t ">
+                                <div className="mt-8 pt-8 border-t">
                                     <ul className="space-y-3">
                                         {step.details.map((detail, idx) => (
                                             <li key={idx} className="text-neutral-600 font-light flex items-start">
@@ -94,28 +99,20 @@ const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter })
                             {step.fields && (
                                 <div className="mt-8 space-y-6">
                                     {step.fields.map((field, idx) => (
-                                        <div key={idx} className="border-l-2  pl-6">
+                                        <div key={idx} className="border-l-2 pl-6">
                                             <div
                                                 contentEditable
                                                 suppressContentEditableWarning
-                                                onBlur={(e) => {
-                                                    const newSteps = [...steps];
-                                                    newSteps[stepIndex].fields[idx].label = e.target.innerText;
-                                                    setSteps(newSteps);
-                                                }}
-                                                className=" font-normal mb-1 outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
+                                                onBlur={(e) => updateText(stepIndex, `fields.${idx}.label`, e)}
+                                                className="font-normal mb-1 outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
                                             >
                                                 {field.label}
                                             </div>
                                             <div
                                                 contentEditable
                                                 suppressContentEditableWarning
-                                                onBlur={(e) => {
-                                                    const newSteps = [...steps];
-                                                    newSteps[stepIndex].fields[idx].desc = e.target.innerText;
-                                                    setSteps(newSteps);
-                                                }}
-                                                className="text-sm text-neutral-500  outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
+                                                onBlur={(e) => updateText(stepIndex, `fields.${idx}.desc`, e)}
+                                                className="text-sm text-neutral-500 outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
                                             >
                                                 {field.desc}
                                             </div>
@@ -125,7 +122,7 @@ const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter })
                             )}
 
                             {step.note && (
-                                <div className="mt-8 pt-6 border-t ">
+                                <div className="mt-8 pt-6 border-t">
                                     <p
                                         contentEditable
                                         suppressContentEditableWarning
@@ -143,7 +140,7 @@ const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter })
                                         contentEditable
                                         suppressContentEditableWarning
                                         onBlur={(e) => updateText(stepIndex, 'action', e)}
-                                        className="text-sm  outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
+                                        className="text-sm outline-none focus:ring-2 focus:ring-blue-200 rounded px-1"
                                     >
                                         → {step.action}
                                     </p>
@@ -153,14 +150,13 @@ const Main = ({ steps: initialSteps, keyNotes: initialKeyNotes,setStepsSetter })
                     </section>
                 ))}
 
+                {/* Key Notes Section */}
                 {keyNotes && (
-                    <section className="">
-                        <h2 className="text-5xl font-SkribblughRegular  mb-12">
-                            Key Notes
-                        </h2>
+                    <section>
+                        <h2 className="text-5xl font-SkribblughRegular mb-12">Key Notes</h2>
                         <div className="ml-29 space-y-6 font-monument-grotesk-regular">
                             {keyNotes.map((note, idx) => (
-                                <p key={idx} className=" ">
+                                <p key={idx}>
                                     <span className="text-neutral-300 mr-3">—</span>
                                     <span
                                         contentEditable
