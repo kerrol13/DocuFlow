@@ -1,9 +1,9 @@
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/light-async";
-import { stackoverflowLight } from "react-syntax-highlighter/dist/cjs/styles/hljs";
-import { nightOwl } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import { vs2015 } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 const Dev = ({ apiData }) => {
+    const normalizeNewlines = (text) =>
+        typeof text === "string" ? text.replace(/\\n/g, "\n") : text;
     const renderContent = (content) => {
         if (Array.isArray(content)) {
             return (
@@ -25,8 +25,8 @@ const Dev = ({ apiData }) => {
                 className="normal-case"
             >
                 {typeof content === "string"
-                    ? content.toLowerCase()
-                    : JSON.stringify(lowercaseObject(content), null, 2)}
+                    ? normalizeNewlines(content.toString())
+                    : JSON.stringify(content, null, 2)}
             </SyntaxHighlighter>
 
         );

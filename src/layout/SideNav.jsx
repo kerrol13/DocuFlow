@@ -1,15 +1,14 @@
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import OverlayAdd from "../components/OverlayAdd";
-import Skeleton from "react-loading-skeleton";
 import Button from "../components/Button";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TITTLE = "NEW DOCUMENT";
 
-const SideNav = () => {
+const SideNav = ({ setPathData }) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
@@ -36,7 +35,7 @@ const SideNav = () => {
         <h2 className="text-6xl text-neutral-900 ">
           DOCUMENTATIONS
         </h2>
-          <Button text="ADD DOCUMENTATION" onClick={() => setIsOpen(true)}/>
+        <Button text="ADD DOCUMENTATION" onClick={() => setIsOpen(true)} />
         <nav className="space-y-3 flex flex-col">
           {data?.data.map(({ name, path, id }) => {
             const isActive = location.pathname.includes(id);

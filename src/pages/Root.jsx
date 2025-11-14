@@ -34,7 +34,7 @@ const Root = () => {
                         <Header title={data?.data.name} guidePath={`/documentation/guide/${id}`} devPath={`/documentation/dev/${id}`} />
                         <Outlet context={{ guideData, guideKeynotesData, devData, devKeynotesData, apiData }} />
                         <Footer />
-                    </>:<div className="overflow-y-scroll"><MainSkeleton/></div>
+                    </> : <div className="overflow-y-scroll"><MainSkeleton /></div>
                 }
             </div>
         </div>

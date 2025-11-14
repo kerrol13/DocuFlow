@@ -14,7 +14,6 @@ const Steps = () => {
   const [stepsSetter, setStepsSetter] = useState(null)
   const [keyNotesSetter, setKeyNotesSetter] = useState(null)
   const [instruction, setInstruction] = useState(null)
-
   const { id } = useParams();
 
   const { mutate, isPending } = useMutation({
@@ -35,13 +34,10 @@ const Steps = () => {
   const { mutate: addDocumentStep, isPending: pendingDocument, isSuccess } = useMutation({
     mutationFn: (payload) => axios.post(`${BASE_URL}/api/documentation-steps/multiple`, payload),
   })
- const { mutate: addKeyNotes, isPending: pendingKeyNotes, isSuccess: isNotesSuccess } = useMutation({
-    mutationFn: (payload) => axios.post(`${BASE_URL}/api/key-notes/multiple`, payload),
-  });
 
- const handleSubmit = () => {
-    if (stepsSetter) addDocumentStep(stepsSetter);
-    if (keyNotesSetter) addKeyNotes(keyNotesSetter);
+  const handleSubmit = () => {
+    const docuRequest = { documentationSteps: stepsSetter, KeyNotes: keyNotesSetter }
+    if (stepsSetter) addDocumentStep(docuRequest);
   };
 
   const hasGuideData = guideData && guideData.length > 0;
