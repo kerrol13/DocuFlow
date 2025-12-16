@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import TextArea from "../../components/TextArea";
 import { useState } from "react";
+import RadioButton from "../../components/RadioButton";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -12,6 +13,7 @@ const Steps = () => {
   const { guideData, guideKeynotesData } = useOutletContext();
   const [data, setData] = useState(null)
   const [stepsSetter, setStepsSetter] = useState(null)
+  const [documentType, setDocumentType] = useState(1)
   const [keyNotesSetter, setKeyNotesSetter] = useState(null)
   const [instruction, setInstruction] = useState(null)
   const { id } = useParams();
@@ -55,8 +57,20 @@ const Steps = () => {
       </>
       :
       <div className="max-w-3xl mx-auto px-6 pt-10 max-h-[300px] font-monument-grotesk-regular">
+        <div className="flex gap-5 mb-5">
+          <p className="text-2xl font-Druk-Medium tracking-wide ">Document Type</p>
+          <RadioButton
+            selectedValue={documentType}
+            onChange={setDocumentType}
+            text="User" value={1} />
+
+          <RadioButton
+            selectedValue={documentType}
+            onChange={setDocumentType}
+            text="Dev" value={2} />
+        </div>
         <TextArea onChange={(e) => setInstruction(e.target.value)} />
-        <Button text="GENERATE DOCUMENTATION" isPending={isPending} onClick={() => mutate({ instruction, documentId: id })} />
+        <Button text="GENERATE DOCUMENTATION" isPending={isPending} onClick={() => mutate({ instruction, documentId: id, documentType: documentType })} />
       </div>}
   </>
 }
