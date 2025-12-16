@@ -20,7 +20,7 @@ const SideNav = ({ setPathData }) => {
     queryFn: () => axios.get(`${BASE_URL}/api/documents`)
   })
 
-  const { mutate: addDocument } = useMutation({
+  const { mutate: addDocument,isPending:isDocuPending } = useMutation({
     mutationFn: (payload) => axios.post(`${BASE_URL}/api/documents`, payload),
     onSuccess: (response) => {
       refetch();
@@ -54,7 +54,7 @@ const SideNav = ({ setPathData }) => {
           })}
         </nav>
       </div>
-      <OverlayAdd isOpen={isOpen} setIsOpen={setIsOpen} modalRef={modalRef} title={TITTLE} action={addDocument} />
+      <OverlayAdd isOpen={isOpen} setIsOpen={setIsOpen} modalRef={modalRef} title={TITTLE} action={addDocument} isPending={isDocuPending} />
     </aside>
   );
 };
